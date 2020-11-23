@@ -45,6 +45,7 @@ public class ProfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mApiService = DI.getNeighbourApiService();
         init();
     }
@@ -59,7 +60,6 @@ public class ProfilActivity extends AppCompatActivity {
 
         Log.d("ProfilActivity+OnCreate","TOUT devrait s'afficher");
         Glide.with(this).load(neighbourAvatar)
-                .centerCrop()
                 .into(mAvatar);
         mName.setText(neighbourName);
         mNameAvatar.setText(neighbourName);

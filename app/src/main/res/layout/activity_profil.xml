@@ -15,8 +15,15 @@
         android:layout_width="404dp"
         android:layout_height="230dp"
         android:layout_gravity="center_horizontal"
-        tools:ignore="MissingConstraints" />
+        android:contentDescription="TO" />
 
+    <TextView
+        android:id="@+id/show_name_avatar_neighbour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="COUCOUC"
+        android:textSize="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,14 +36,6 @@
         >
 
 
-    <TextView
-        android:id="@+id/show_name_avatar_neighbour"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:paddingLeft="30dp"
-
-        android:text="COUCOUC"
-        android:textSize="20dp" />
 
         <TextView
             android:id="@+id/show_name_neighbour"
