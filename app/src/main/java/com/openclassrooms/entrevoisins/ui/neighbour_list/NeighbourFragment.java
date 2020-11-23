@@ -1,24 +1,29 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.ShowProfilNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -40,6 +45,8 @@ public class NeighbourFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("TOZ", "onCreate: 1 ");
+        System.out.println("Tout commence ici ?");
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
     }
@@ -47,6 +54,8 @@ public class NeighbourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("TOZ", "onCreateView ");
+        System.out.println("On continue la ?");
         View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
@@ -87,7 +96,25 @@ public class NeighbourFragment extends Fragment {
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
+        Log.d("TOZ", "Supp ");
+        System.out.println("onDeleteNeighbour - Supprimer quelqu'un");
         mApiService.deleteNeighbour(event.neighbour);
         initList();
+    }
+
+    @Subscribe
+    public void onShowProfil(ShowProfilNeighbourEvent event) {
+        Log.d("TOZ", "Show "+event.neighbour.getName());
+        System.out.println("Bha on affiche frère !");
+        mApiService.showNeighbour(event.neighbour);
+        Toast.makeText(getActivity(), "Event type: "+event.neighbour.getName(), Toast.LENGTH_SHORT).show();
+        initList();
+        Intent intent = new Intent(getContext(),ProfilActivity.class);
+        intent.putExtra("neighbourAvatar", event.neighbour.getAvatarUrl());
+        intent.putExtra("neighbourName", event.neighbour.getName());
+        intent.putExtra("neighbourPhone", event.neighbour.getPhoneNumber());
+        intent.putExtra("neighbourLocation", event.neighbour.getAddress());
+        intent.putExtra("neighbourAbout", event.neighbour.getAboutMe());
+        startActivity(intent);
     }
 }
