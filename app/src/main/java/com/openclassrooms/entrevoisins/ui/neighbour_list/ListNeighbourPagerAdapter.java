@@ -4,11 +4,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.openclassrooms.entrevoisins.ui.neighbour_list.Favorite.NeighbourFavFragment;
+
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
-    public ListNeighbourPagerAdapter(FragmentManager fm) {
+    private int numOfTabs;
+
+    public ListNeighbourPagerAdapter(FragmentManager fm, int  numOfTabs) {
         super(fm);
+        this.numOfTabs = numOfTabs;
     }
 
     /**
@@ -18,7 +23,14 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        return NeighbourFragment.newInstance();
+        switch (position){
+            case 0:
+                return NeighbourFragment.newInstance();
+            case 1:
+                return NeighbourFavFragment.newInstance();
+            default:
+                return null;
+        }
     }
 
     /**
@@ -27,6 +39,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 1;
+        return numOfTabs;
     }
 }

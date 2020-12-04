@@ -15,8 +15,7 @@
         app:layout_anchor="@id/show_avatar_neighbour"
         app:layout_anchorGravity="bottom|end"
         android:src="@drawable/ic_star_border_white_24dp"
-        tools:ignore="MissingConstraints"
-        android:contentDescription="TODO" />
+        />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

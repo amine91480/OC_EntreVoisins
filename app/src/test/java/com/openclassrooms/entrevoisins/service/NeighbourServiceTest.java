@@ -29,15 +29,15 @@ public class NeighbourServiceTest {
 
     @Test
     public void getNeighboursWithSuccess() {
-        List<Neighbour> neighbours = service.getNeighbours();
+        List<Neighbour> neighbours = service.getNeighbours(mNeighbours);
         List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
         assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
     }
 
     @Test
     public void deleteNeighbourWithSuccess() {
-        Neighbour neighbourToDelete = service.getNeighbours().get(0);
+        Neighbour neighbourToDelete = service.getNeighbours(mNeighbours).get(0);
         service.deleteNeighbour(neighbourToDelete);
-        assertFalse(service.getNeighbours().contains(neighbourToDelete));
+        assertFalse(service.getNeighbours(mNeighbours).contains(neighbourToDelete));
     }
 }

@@ -1,22 +1,25 @@
 package com.openclassrooms.entrevoisins.service;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Dummy mock for the Api
  */
-public class DummyNeighbourApiService implements  NeighbourApiService {
+public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
 
-
     /**
-     * {@inheritDoc}
+     * Get all my Neighbours
+     * @return {@link List}
      */
     @Override
     public List<Neighbour> getNeighbours() {
@@ -24,7 +27,23 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     }
 
     /**
-     * {@inheritDoc}
+     * Get all my Favorites
+     * @return {@link List}
+     */
+    @Override
+    public List<Neighbour> getFavorites() {
+        List<Neighbour> favorites = new ArrayList<>();
+        for (Neighbour neighbour : neighbours) {
+            if (neighbour.isFavorite()) {
+                favorites.add(neighbour);
+            }
+        }
+        return favorites;
+    }
+
+    /**
+     * Delete the neighbour to the List neighbours
+     * @ param neighbour
      */
     @Override
     public void deleteNeighbour(Neighbour neighbour) {
@@ -33,18 +52,31 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     /**
      * {@inheritDoc}
+     * Create a new neigbour or update a neighbour existing on the list neighbours
      * @param neighbour
      */
     @Override
     public void createNeighbour(Neighbour neighbour) {
-        neighbours.add(neighbour);
+        boolean isFound = false;
+        for (Neighbour n : neighbours) {
+            if (n.getId() == neighbour.getId()) {
+                n.setFavorite(neighbour.isFavorite());
+                isFound = true;
+                break;
+            }
+        }
+        if (!isFound) {
+            neighbours.add(neighbour);
+        }
     }
 
+    /**
+     * Return a instance of neighbour
+     * @param neighbour
+     */
     @Override
     public void showNeighbour(Neighbour neighbour) {
-        Log.d("showNeighbour", String.valueOf(neighbour.getId()));
-        Log.d("showNeighbour", neighbour.getName());
-        Log.d("showNeighbour", String.valueOf(neighbours.indexOf(neighbour)));
-        neighbours.indexOf(neighbour);}
+        neighbours.indexOf(neighbour);
+    }
 
 }

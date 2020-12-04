@@ -60,7 +60,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mNeighbourName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("SuperToz", "ICI On à le bouton pour afficher le profil ! : " + neighbour.getId());
+                Log.d("SuperToz", "ICI On à le bouton pour afficher le profil ! : " + neighbour.getId());
                  EventBus.getDefault().post(new ShowProfilNeighbourEvent(neighbour));
             }
         });

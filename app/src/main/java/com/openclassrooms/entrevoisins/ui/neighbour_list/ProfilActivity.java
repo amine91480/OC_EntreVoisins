@@ -1,14 +1,14 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.List;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -18,12 +18,19 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 
+import java.util.Collections;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.bumptech.glide.Glide.init;
+
 public class ProfilActivity extends AppCompatActivity {
 
+    private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
+    private List<Neighbour> mFavorites;
 
     @BindView(R.id.show_name_neighbour)
     TextView mName;
@@ -42,44 +49,50 @@ public class ProfilActivity extends AppCompatActivity {
     @BindView(R.id.floatingActionButtonProfil)
     ImageView mFav;
 
-    private NeighbourApiService mApiService;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
         ButterKnife.bind(this);
         mApiService = DI.getNeighbourApiService();
-        init();
+        mNeighbours = mApiService.getNeighbours();
+        mFavorites = mApiService.getFavorites();
+        Log.d("Profil+ListeNeighbour", String.valueOf(mNeighbours.size()));
+        Log.d("Profil+ListeFavoris", String.valueOf(mFavorites.size()));
+        init(mFavorites,mNeighbours);
     }
 
-    private void init(){
-        String neighbourName = "Name is not set";
-        String neighbourLocation = "Location is not set";
-        String neighbourPhone = "Phone number is not set";
-        String neighbourAbout = "About is not set";
-        String neighbourAvatar = "The URL AVATAR is not set";
 
+    private void init(List<Neighbour> favorites, List<Neighbour> neighbours) {
         Intent intent = getIntent();
-        if( intent != null ) {
-            neighbourName =  intent.getStringExtra("neighbourName");
-            neighbourLocation =  intent.getStringExtra("neighbourLocation");
-            neighbourPhone =  intent.getStringExtra("neighbourPhone");
-            neighbourAbout =  intent.getStringExtra("neighbourAbout");
-            neighbourAvatar =  intent.getStringExtra("neighbourAvatar");
-        }
-
-        Log.d("ProfilActivity+OnCreate","Data transmis");
-        Glide.with(this).load(neighbourAvatar)
+        Neighbour neighbour = (Neighbour) intent.getSerializableExtra("neighbour");
+        Log.d("InitProfil", String.valueOf(neighbour.isFavorite()));
+        Glide.with(this).load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.noTransformation())
                 .into(mAvatar);
-        mName.setText(neighbourName);
-        mNameAvatar.setText(neighbourName);
-        mLocation.setText(neighbourLocation);
-        mPhone.setText(neighbourPhone);
-        mAdress.setText("www.facebook/"+neighbourName.toLowerCase());
-        mAbout.setText(neighbourAbout);
+        mName.setText(neighbour.getName());
+        mNameAvatar.setText(neighbour.getName());
+        mLocation.setText(neighbour.getAddress());
+        mPhone.setText(neighbour.getPhoneNumber());
+        mAdress.setText("www.facebook/" + neighbour.getName().toLowerCase());
+        mAbout.setText(neighbour.getAboutMe());
+        if (neighbour.isFavorite() == true) {
+            mFav.setImageResource(R.drawable.ic_star_white_24dp);
+        } if (neighbour.isFavorite() == false) {
+            mFav.setImageResource(R.drawable.ic_star_border_white_24dp);
+        }
+        findViewById(R.id.floatingActionButtonProfil).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!neighbour.isFavorite()) {
+                    neighbour.setFavorite(true); mFav.setImageResource(R.drawable.ic_star_white_24dp);
+                }
+                else {
+                    mFav.setImageResource(R.drawable.ic_star_border_white_24dp);
+                    neighbour.setFavorite(false);
+                }
+                mApiService.createNeighbour(neighbour);
+            }
+        });
     }
 }
