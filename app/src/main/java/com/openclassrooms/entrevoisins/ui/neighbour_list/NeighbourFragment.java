@@ -98,10 +98,10 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onShowProfil(ShowProfilNeighbourEvent event) {
         mApiService.showNeighbour(event.neighbour);
-        Toast.makeText(getActivity(), "Event type: "+event.neighbour.isFavorite(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Event type: "+event.neighbour.getId(), Toast.LENGTH_SHORT).show();
         initList();
         Intent intent = new Intent(getContext(),ProfilActivity.class);
-        intent.putExtra("neighbour", event.neighbour);
+        intent.putExtra("neighbourId", event.neighbour.getId());
         startActivity(intent);
     }
 }

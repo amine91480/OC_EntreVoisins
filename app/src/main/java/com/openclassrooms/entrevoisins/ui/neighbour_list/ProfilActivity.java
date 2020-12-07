@@ -31,6 +31,9 @@ public class ProfilActivity extends AppCompatActivity {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private List<Neighbour> mFavorites;
+    private Neighbour neighbour;
+    private Integer id;
+    private Integer mNeighbourId;
 
     @BindView(R.id.show_name_neighbour)
     TextView mName;
@@ -49,6 +52,7 @@ public class ProfilActivity extends AppCompatActivity {
     @BindView(R.id.floatingActionButtonProfil)
     ImageView mFav;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +63,16 @@ public class ProfilActivity extends AppCompatActivity {
         mFavorites = mApiService.getFavorites();
         Log.d("Profil+ListeNeighbour", String.valueOf(mNeighbours.size()));
         Log.d("Profil+ListeFavoris", String.valueOf(mFavorites.size()));
-        init(mFavorites,mNeighbours);
+        init();
     }
 
 
-    private void init(List<Neighbour> favorites, List<Neighbour> neighbours) {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void init() {
         Intent intent = getIntent();
-        Neighbour neighbour = (Neighbour) intent.getSerializableExtra("neighbour");
-        Log.d("InitProfil", String.valueOf(neighbour.isFavorite()));
+        mNeighbourId = (Integer) intent.getIntExtra("neighbourId",0);
+        neighbour = mApiService.neighbourId(mNeighbourId);
+        Log.d("InitProfil", String.valueOf(neighbour.getId()));
         Glide.with(this).load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.noTransformation())
                 .into(mAvatar);

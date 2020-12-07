@@ -1,13 +1,8 @@
 package com.openclassrooms.entrevoisins.service;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.util.Log;
-
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,6 +11,7 @@ import java.util.List;
 public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
+    private Integer i = 0;
 
     /**
      * Get all my Neighbours
@@ -78,5 +74,13 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     public void showNeighbour(Neighbour neighbour) {
         neighbours.indexOf(neighbour);
     }
+
+    @Override
+    public int neighbourId(Neighbour neighbour){
+        Object i = null ;
+        return neighbours.indexOf(i);
+    }
+
+
 
 }

@@ -6,31 +6,46 @@ import java.util.Objects;
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour implements Serializable {
+public class Neighbour {
 
-    /** Identifier */
+    /**
+     * Identifier
+     */
     private long id;
 
-    /** Full name */
+    /**
+     * Full name
+     */
     private String name;
 
-    /** Avatar */
+    /**
+     * Avatar
+     */
     private String avatarUrl;
 
-    /** Adress */
+    /**
+     * Adress
+     */
     private String address;
 
-    /** Phone number */
+    /**
+     * Phone number
+     */
     private String phoneNumber;
 
-    /** About me */
+    /**
+     * About me
+     */
     private String aboutMe;
 
-    /** Is Favorite */
+    /**
+     * Is Favorite
+     */
     private boolean favorite;
 
     /**
      * Constructor
+     *
      * @param id
      * @param name
      * @param avatarUrl
@@ -95,9 +110,13 @@ public class Neighbour implements Serializable {
         this.aboutMe = aboutMe;
     }
 
-    public boolean isFavorite() { return favorite; }
+    public boolean isFavorite() {
+        return favorite;
+    }
 
-    public void setFavorite(boolean favorite) { this.favorite = favorite; }
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 
     @Override
     public boolean equals(Object o) {
