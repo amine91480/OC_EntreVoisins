@@ -81,7 +81,6 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     @OnClick(R.id.create)
     void addNeighbour() {
-        boolean favorite;
         Neighbour neighbour = new Neighbour(
                 System.currentTimeMillis(),
                 nameInput.getEditText().getText().toString(),
@@ -89,9 +88,8 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 addressInput.getEditText().getText().toString(),
                 phoneInput.getEditText().getText().toString(),
                 aboutMeInput.getEditText().getText().toString(),
-                favorite = false);
+                false );
         mApiService.createNeighbour(neighbour);
-        System.out.println(neighbour.isFavorite());
         finish();
     }
 

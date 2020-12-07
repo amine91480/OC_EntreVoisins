@@ -12,7 +12,6 @@ public class ShowProfilNeighbourEvent {
 
     public ShowProfilNeighbourEvent(Neighbour neighbour) {
         this.neighbour = neighbour;
-        Log.d("ShowNeighbourEvent", neighbour.getName()+" Favoris :"+(neighbour.isFavorite()));
     }
 
     /**

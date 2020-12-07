@@ -11,7 +11,6 @@ import java.util.List;
 public class DummyNeighbourApiService implements NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
-    private Integer i = 0;
 
     /**
      * Get all my Neighbours
@@ -76,11 +75,11 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     }
 
     @Override
-    public int neighbourId(Neighbour neighbour){
-        Object i = null ;
-        return neighbours.indexOf(i);
+    public Neighbour getNeighbour(int id) {
+        Neighbour neighbour;
+        neighbour = neighbours.get(id);
+        return neighbour;
+
     }
-
-
 
 }

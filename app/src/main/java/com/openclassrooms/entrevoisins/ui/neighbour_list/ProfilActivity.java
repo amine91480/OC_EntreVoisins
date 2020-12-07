@@ -32,7 +32,6 @@ public class ProfilActivity extends AppCompatActivity {
     private List<Neighbour> mNeighbours;
     private List<Neighbour> mFavorites;
     private Neighbour neighbour;
-    private Integer id;
     private Integer mNeighbourId;
 
     @BindView(R.id.show_name_neighbour)
@@ -61,18 +60,18 @@ public class ProfilActivity extends AppCompatActivity {
         mApiService = DI.getNeighbourApiService();
         mNeighbours = mApiService.getNeighbours();
         mFavorites = mApiService.getFavorites();
-        Log.d("Profil+ListeNeighbour", String.valueOf(mNeighbours.size()));
-        Log.d("Profil+ListeFavoris", String.valueOf(mFavorites.size()));
-        init();
+        receipIntent();
+        configureView();
+        setFavoriteMethode();
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void init() {
+    private void receipIntent() {
         Intent intent = getIntent();
-        mNeighbourId = (Integer) intent.getIntExtra("neighbourId",0);
-        neighbour = mApiService.neighbourId(mNeighbourId);
-        Log.d("InitProfil", String.valueOf(neighbour.getId()));
+        mNeighbourId = (Integer.valueOf((int) intent.getLongExtra("neighbourId",0)) - 1 );
+        neighbour = mApiService.getNeighbour(mNeighbourId);
+    }
+
+    private void configureView() {
         Glide.with(this).load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.noTransformation())
                 .into(mAvatar);
@@ -84,16 +83,20 @@ public class ProfilActivity extends AppCompatActivity {
         mAbout.setText(neighbour.getAboutMe());
         if (neighbour.isFavorite() == true) {
             mFav.setImageResource(R.drawable.ic_star_white_24dp);
-        } if (neighbour.isFavorite() == false) {
+        }
+        if (neighbour.isFavorite() == false) {
             mFav.setImageResource(R.drawable.ic_star_border_white_24dp);
         }
+    }
+
+    private void setFavoriteMethode() {
         findViewById(R.id.floatingActionButtonProfil).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!neighbour.isFavorite()) {
-                    neighbour.setFavorite(true); mFav.setImageResource(R.drawable.ic_star_white_24dp);
-                }
-                else {
+                    neighbour.setFavorite(true);
+                    mFav.setImageResource(R.drawable.ic_star_white_24dp);
+                } else {
                     mFav.setImageResource(R.drawable.ic_star_border_white_24dp);
                     neighbour.setFavorite(false);
                 }

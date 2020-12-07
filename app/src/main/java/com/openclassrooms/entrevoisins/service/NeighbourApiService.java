@@ -40,6 +40,6 @@ public interface NeighbourApiService {
      */
     void showNeighbour(Neighbour neighbour);
 
-    int neighbourId(Neighbour neighbour);
 
+    Neighbour getNeighbour(int id);
 }
