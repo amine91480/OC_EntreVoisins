@@ -79,16 +79,4 @@ public class NeighbourFavFragment extends Fragment {
         super.onResume();
         initRecyclerView();
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
 }
