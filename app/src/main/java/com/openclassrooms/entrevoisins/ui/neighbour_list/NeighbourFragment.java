@@ -100,7 +100,15 @@ public class NeighbourFragment extends Fragment {
         mApiService.showNeighbour(event.neighbour);
         initList();
         Intent intent = new Intent(getContext(),ProfilActivity.class);
-        intent.putExtra("neighbourId", event.neighbour.getId());
+        intent.putExtra("neighbour", new Neighbour(
+                event.neighbour.getId(),
+                event.neighbour.getName(),
+                event.neighbour.getAvatarUrl(),
+                event.neighbour.getAddress(),
+                event.neighbour.getPhoneNumber(),
+                event.neighbour.getAboutMe(),
+                event.neighbour.isFavorite()
+        ));
         startActivity(intent);
     }
 }

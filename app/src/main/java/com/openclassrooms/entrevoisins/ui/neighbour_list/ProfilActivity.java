@@ -31,7 +31,6 @@ public class ProfilActivity extends AppCompatActivity {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private List<Neighbour> mFavorites;
-    private Neighbour neighbour;
     private Integer mNeighbourId;
 
     @BindView(R.id.show_name_neighbour)
@@ -61,17 +60,16 @@ public class ProfilActivity extends AppCompatActivity {
         mNeighbours = mApiService.getNeighbours();
         mFavorites = mApiService.getFavorites();
         receipIntent();
-        configureView();
-        setFavoriteMethode();
     }
 
     private void receipIntent() {
-        Intent intent = getIntent();
-        mNeighbourId = (Integer.valueOf((int) intent.getLongExtra("neighbourId",0)) - 1 );
-        neighbour = mApiService.getNeighbour(mNeighbourId);
+        Bundle intent = getIntent().getExtras();
+        Neighbour neighbour = (Neighbour) intent.getParcelable("neighbour");
+        configureView(neighbour);
+        setFavoriteMethode(neighbour);
     }
 
-    private void configureView() {
+    private void configureView(Neighbour neighbour) {
         Glide.with(this).load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.noTransformation())
                 .into(mAvatar);
@@ -89,7 +87,7 @@ public class ProfilActivity extends AppCompatActivity {
         }
     }
 
-    private void setFavoriteMethode() {
+    private void setFavoriteMethode(Neighbour neighbour) {
         findViewById(R.id.floatingActionButtonProfil).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
