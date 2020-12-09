@@ -1,11 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,14 +13,10 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
-
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.bumptech.glide.Glide.init;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -49,6 +41,8 @@ public class ProfilActivity extends AppCompatActivity {
     ImageView mAvatar;
     @BindView(R.id.floatingActionButtonProfil)
     ImageView mFav;
+    @BindView(R.id.floatingActionButtonBack)
+    ImageView mBack;
 
 
     @Override
@@ -66,7 +60,8 @@ public class ProfilActivity extends AppCompatActivity {
         Bundle intent = getIntent().getExtras();
         Neighbour neighbour = (Neighbour) intent.getParcelable("neighbour");
         configureView(neighbour);
-        setFavoriteMethode(neighbour);
+        onClickFavorite(neighbour);
+        onBackPressed();
     }
 
     private void configureView(Neighbour neighbour) {
@@ -87,8 +82,8 @@ public class ProfilActivity extends AppCompatActivity {
         }
     }
 
-    private void setFavoriteMethode(Neighbour neighbour) {
-        findViewById(R.id.floatingActionButtonProfil).setOnClickListener(new View.OnClickListener() {
+    private void onClickFavorite(Neighbour neighbour) {
+       mFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!neighbour.isFavorite()) {
@@ -99,6 +94,14 @@ public class ProfilActivity extends AppCompatActivity {
                     neighbour.setFavorite(false);
                 }
                 mApiService.createNeighbour(neighbour);
+            }
+        });
+    }
+    public void onBackPressed(){
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
