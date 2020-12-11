@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.service;
 
+import android.util.Log;
+
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
@@ -68,18 +70,11 @@ public class DummyNeighbourApiService implements NeighbourApiService {
     /**
      * Return a instance of neighbour
      * @param neighbour
+     * @return
      */
     @Override
-    public void showNeighbour(Neighbour neighbour) {
-        neighbours.indexOf(neighbour);
-    }
-
-    @Override
-    public Neighbour getNeighbour(int id) {
-        Neighbour neighbour;
-        neighbour = neighbours.get(id);
-        return neighbour;
-
+    public int showNeighbour(Neighbour neighbour) {
+       return neighbours.indexOf(neighbour);
     }
 
 }

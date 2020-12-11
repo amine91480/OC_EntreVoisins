@@ -11,8 +11,11 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test on Neighbour service
@@ -29,15 +32,37 @@ public class NeighbourServiceTest {
 
     @Test
     public void getNeighboursWithSuccess() {
-        List<Neighbour> neighbours = service.getNeighbours(mNeighbours);
+        List<Neighbour> neighbours = service.getNeighbours();
         List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
         assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
     }
 
     @Test
     public void deleteNeighbourWithSuccess() {
-        Neighbour neighbourToDelete = service.getNeighbours(mNeighbours).get(0);
+        Neighbour neighbourToDelete = service.getNeighbours().get(0);
         service.deleteNeighbour(neighbourToDelete);
-        assertFalse(service.getNeighbours(mNeighbours).contains(neighbourToDelete));
+        assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
+
+    @Test
+    public void createNeighbourWithSuccess() {
+        Neighbour amine = new Neighbour(13, "Amine", "", "Quincy-Sous-Senart", "06-51-32-04-15", "Futur développeur Android Mobile", true);
+        service.createNeighbour(amine);
+        assertFalse(!service.getNeighbours().contains(amine));
+    }
+
+    @Test
+    public void getFavoriteWithSuccess() {
+        Neighbour amine = new Neighbour(13, "Amine", "", "Quincy-Sous-Senart", "06-51-32-04-15", "Futur développeur Android Mobile", true);
+        service.createNeighbour(amine);
+        assertTrue(service.getFavorites().contains(amine));
+        amine.setFavorite(false);
+        assertFalse(service.getFavorites().contains(amine));
+    }
+
+   /* @Test
+    public void getShowNeighbourWithSuccess() {
+
+    }*/
+
 }
