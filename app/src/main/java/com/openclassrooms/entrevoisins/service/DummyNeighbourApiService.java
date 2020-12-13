@@ -67,14 +67,4 @@ public class DummyNeighbourApiService implements NeighbourApiService {
         }
     }
 
-    /**
-     * Return a instance of neighbour
-     * @param neighbour
-     * @return
-     */
-    @Override
-    public int showNeighbour(Neighbour neighbour) {
-       return neighbours.indexOf(neighbour);
-    }
-
 }

@@ -34,10 +34,4 @@ public interface NeighbourApiService {
      */
     void createNeighbour(Neighbour neighbour);
 
-    /**
-     * Show a neighbour
-     * @param neighbour
-     * @return
-     */
-    int showNeighbour(Neighbour neighbour);
 }

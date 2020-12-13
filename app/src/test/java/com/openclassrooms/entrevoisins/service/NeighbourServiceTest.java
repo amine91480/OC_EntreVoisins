@@ -60,9 +60,4 @@ public class NeighbourServiceTest {
         assertFalse(service.getFavorites().contains(amine));
     }
 
-   /* @Test
-    public void getShowNeighbourWithSuccess() {
-
-    }*/
-
 }

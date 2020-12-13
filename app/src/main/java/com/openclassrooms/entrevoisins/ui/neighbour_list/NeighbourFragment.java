@@ -97,18 +97,9 @@ public class NeighbourFragment extends Fragment {
 
     @Subscribe
     public void onShowProfil(ShowProfilNeighbourEvent event) {
-        mApiService.showNeighbour(event.neighbour);
         initList();
         Intent intent = new Intent(getContext(),ProfilActivity.class);
-        intent.putExtra("neighbour", new Neighbour(
-                event.neighbour.getId(),
-                event.neighbour.getName(),
-                event.neighbour.getAvatarUrl(),
-                event.neighbour.getAddress(),
-                event.neighbour.getPhoneNumber(),
-                event.neighbour.getAboutMe(),
-                event.neighbour.isFavorite()
-        ));
+        intent.putExtra("neighbour", event.neighbour);
         startActivity(intent);
     }
 }
