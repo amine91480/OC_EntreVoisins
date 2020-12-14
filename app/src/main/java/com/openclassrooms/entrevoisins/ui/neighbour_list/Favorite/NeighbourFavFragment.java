@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -25,6 +26,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +42,8 @@ public class NeighbourFavFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MyNeighbourRecyclerViewAdapter mAdapter;
 
+    @BindView(R.id.item_list_delete_button)
+    ImageView deleteButton;
 
     /**
      * Create and return a new instance
@@ -50,9 +55,9 @@ public class NeighbourFavFragment extends Fragment {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        System.out.println("NeighbourFavoriteListe");
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+        mFavorites = mApiService.getFavorites();
     }
 
     @Override
@@ -63,7 +68,6 @@ public class NeighbourFavFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        initRecyclerView();
         return view;
     }
 

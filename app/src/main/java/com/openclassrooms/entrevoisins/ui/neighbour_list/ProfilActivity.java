@@ -51,8 +51,6 @@ public class ProfilActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profil);
         ButterKnife.bind(this);
         mApiService = DI.getNeighbourApiService();
-        mNeighbours = mApiService.getNeighbours();
-        mFavorites = mApiService.getFavorites();
         receipIntent();
     }
 
