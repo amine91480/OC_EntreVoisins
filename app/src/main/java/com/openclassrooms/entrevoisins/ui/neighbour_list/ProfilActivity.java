@@ -21,9 +21,6 @@ import butterknife.ButterKnife;
 public class ProfilActivity extends AppCompatActivity {
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
-    private List<Neighbour> mFavorites;
-    private Integer mNeighbourId;
 
     @BindView(R.id.show_name_neighbour)
     TextView mName;
