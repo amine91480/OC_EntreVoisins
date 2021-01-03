@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.openclassrooms.entrevoisins.ui.neighbour_list.Favorite.NeighbourFavFragment;
-
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
