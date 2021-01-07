@@ -1,9 +1,12 @@
-
 package com.openclassrooms.entrevoisins.neighbour_list;
 
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.Display;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
@@ -12,6 +15,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,23 +23,19 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static android.os.SystemClock.sleep;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
-
 
 
 /**
@@ -51,11 +51,12 @@ public class NeighboursListTest {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private List<Neighbour> mFavorites;
+    private CountingIdlingResource mIdlingResource = null;
 
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
-            new ActivityTestRule(ListNeighbourActivity.class);
+            new ActivityTestRule(ListNeighbourActivity.class, false, true);
 
     @Before
     public void setUp() {
@@ -83,7 +84,7 @@ public class NeighboursListTest {
     public void myNeighboursList_lunchAction_shouldLunchProfilActivity() {
         // We check on the RECYCLERVIEW -> the container position 1 is the second Neighbour, click on this container
         onView(withId(R.id.list_neighbours)).
-                perform(RecyclerViewActions.actionOnItemAtPosition(1,click()));
+                perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         // Verify if the the layout Activity profil is lunch with the id ShowProfil
         onView(withId(R.id.showProfil)).
                 check(matches(isDisplayed()));
@@ -100,7 +101,7 @@ public class NeighboursListTest {
     public void myNeighboursList_lunchAction_shouldLunchProfilActivityAndCheckName() {
         // We scroll to the position container of RECYCLERVIEW 5 and click on the container to lunch the ShowActivity
         onView(withId(R.id.list_neighbours)).
-                perform(RecyclerViewActions.actionOnItemAtPosition(5,click()));
+                perform(RecyclerViewActions.actionOnItemAtPosition(5, click()));
         // We check if the Text attribute of show_name_neigbour is the name of 5 Neighbour
         onView(withId(R.id.show_name_neighbour)).
                 check(matches(withText(mNeighbours.get(5).getName())));
@@ -127,27 +128,23 @@ public class NeighboursListTest {
 
     @Test
     public void myFavoritesList_showFavorite_shouldReturnTheNeighboursisFavorite() {
-        //test vérifiant que l’onglet Favoris n’affiche que les voisins marqués comme
-        // Go to the FavoriteListeView with a scrollLeft
-        onView(withId(R.id.container)).perform(swipeLeft());
-        // Check if the FavoriteListView is Empty because the FavoriteList is empty on the lunch of the test/application
-        onView(withId(R.id.list_neighbours_fav)).check(withItemCount(0));
-        // Go to the NeighbourList with scrollRight
-        onView(withId(R.id.container)).perform(swipeRight());
-        // Go to the ShowPrfil to 0 at 4 Neighbour and click on the Button Favorite and back to the listNeigbour to add them on FavoriteListe
-        // At sleep because it's doesn't work
-        sleep(1000);
-        for (int i = 0; i < 3; i++){
-            onView(withId(R.id.list_neighbours)).
-                    perform(RecyclerViewActions.actionOnItemAtPosition(i,click()));
-
+        // Created a Integer i
+        Integer i;
+        // Create a loop who lunch there actions 4 times
+        for (i = 0; i < 4; i++) {
+            // Search on the RECYCLERVIEW the i Container and click at the container
+            onView(withId(R.id.list_neighbours)).perform(RecyclerViewActions.actionOnItemAtPosition(i, click()));
+            // We check if the ID -> show_name_neighbour match whith the good Neighbour
+            onView(withId(R.id.show_name_neighbour)).
+                    check(matches(withText(mNeighbours.get(i).getName())));
+            // We click on the botton with the ID is floatingActionButtonProfil to set the Neighbour on Favoris
             onView(withId(R.id.floatingActionButtonProfil)).perform(click());
+            // We click on the botton with the ID is floatingActionButtonBack to go on the previous page
             onView(withId(R.id.floatingActionButtonBack)).perform(click());
         }
-        // Go to the FavoriteListeView again with a scrollLeft
+        // Swipe to the Right to go in the RecyclerView -> FavoriteListe
         onView(withId(R.id.container)).perform(swipeLeft());
-        // Check if the FavoriteListView has 5 container on the FavoriteList
-        onView(withId(R.id.list_neighbours_fav)).check(withItemCount(3));
+        // Check if the FavoriteList has 4 container on the FavoriteList
+        onView(withId(R.id.list_neighbours_fav)).check(withItemCount(4));
     }
-
 }
