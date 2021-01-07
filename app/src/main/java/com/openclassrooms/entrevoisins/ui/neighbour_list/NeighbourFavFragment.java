@@ -32,12 +32,14 @@ public class NeighbourFavFragment extends Fragment {
 
     /**
      * Create and return a new instance
+     *
      * @return @{@link NeighbourFavFragment}
      */
     public static NeighbourFavFragment newInstance() {
         NeighbourFavFragment fragment = new NeighbourFavFragment();
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

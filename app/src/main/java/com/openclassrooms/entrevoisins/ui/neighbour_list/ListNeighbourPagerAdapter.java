@@ -4,24 +4,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
     private int numOfTabs;
 
-    public ListNeighbourPagerAdapter(FragmentManager fm, int  numOfTabs) {
+    public ListNeighbourPagerAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.numOfTabs = numOfTabs;
     }
 
     /**
      * getItem is called to instantiate the fragment for the given page.
+     *
      * @param position
      * @return
      */
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return NeighbourFragment.newInstance();
             case 1:
@@ -33,6 +33,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
     /**
      * get the number of pages
+     *
      * @return
      */
     @Override

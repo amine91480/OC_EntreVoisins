@@ -22,16 +22,15 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-
 public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
 
-
-    /**
+    /*
      * Create and return a new instance
+     *
      * @return @{@link NeighbourFragment}
      */
     public static NeighbourFragment newInstance() {
@@ -84,12 +83,13 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         if (event.neighbour.isFavorite()) {
-            Toast.makeText(this.getContext(),"You can't Delete a Neighbour In Favorite",Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), "You can't Delete a Neighbour In Favorite", Toast.LENGTH_LONG).show();
         } else {
             mApiService.deleteNeighbour(event.neighbour);
             initList();
