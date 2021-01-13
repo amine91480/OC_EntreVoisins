@@ -46,18 +46,18 @@ public class NeighbourServiceTest {
 
     @Test
     public void createNeighbourWithSuccess() {
-        Neighbour amine = new Neighbour(13, "Amine", "", "Quincy-Sous-Senart", "06-51-32-04-15", "Futur développeur Android Mobile", true);
+        Neighbour amine = new Neighbour(13, "Amine", "", "Quincy-Sous-Senart", "06-51-32-04-15", "Futur développeur Android Mobile", false);
         service.createNeighbour(amine);
-        assertFalse(!service.getNeighbours().contains(amine));
+        assertTrue(service.getNeighbours().contains(amine));
     }
 
     @Test
     public void getFavoriteWithSuccess() {
-        Neighbour amine = new Neighbour(13, "Amine", "", "Quincy-Sous-Senart", "06-51-32-04-15", "Futur développeur Android Mobile", true);
+        Neighbour amine = new Neighbour(13, "Amine", "", "Quincy-Sous-Senart", "06-51-32-04-15", "Futur développeur Android Mobile", false);
         service.createNeighbour(amine);
-        assertTrue(service.getFavorites().contains(amine));
-        amine.setFavorite(false);
         assertFalse(service.getFavorites().contains(amine));
+        amine.setFavorite(true);
+        assertTrue(service.getFavorites().contains(amine));
     }
 
 }
