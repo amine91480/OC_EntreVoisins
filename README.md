@@ -11,12 +11,12 @@ Entrevoin est une application qui permet à des personnes d’un même quartier 
 ### Test :
     JUnit / Espresso
 
-## Projet existant  ->
-  Fonctionalités presentes :
+## Projet existant :
+### Fonctionalités presentes :
     - Un RecyclerView qui rend un container qui contient la liste de Voisin avec un nom, une image, et un bouton pour supprimer le voisin en question
     - Un bouton qui lance une nouvelle activité qui permet de crée un nouveau voisin qui est inséré dans la liste des voisins
 
-  Ajout des fonctionalités suivante :
+### Ajout des fonctionalités suivante :
     - Ajouter une activité qui affiche les détails d’un voisin sélectionner
     - Ajouter des voisins présent dans la liste en Favoris
     - Ajout d'un fragment qui afficher la liste des Favoris
