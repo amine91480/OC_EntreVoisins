@@ -15,6 +15,7 @@ Entrevoin est une application qui permet à des personnes d’un même quartier 
 ### Fonctionalités presentes :
     - Un RecyclerView qui rend un container qui contient la liste de Voisin avec un nom, une image, et un bouton pour supprimer le voisin en question
     - Un bouton qui lance une nouvelle activité qui permet de crée un nouveau voisin qui est inséré dans la liste des voisins
+    - Un bouton pour supprimer un voisin de la liste
 
 ### Ajout des fonctionalités suivante :
     - Ajouter une activité qui affiche les détails d’un voisin sélectionner
