@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/showProfil"
@@ -13,23 +14,16 @@
         android:id="@+id/floatingActionButtonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="7dp"
+        android:layout_margin="8dp"
         android:contentDescription="TODO"
         android:src="@drawable/ic_baseline_arrow_back_24"
-        app:layout_anchor="@id/show_avatar_neighbour"
-        app:layout_anchorGravity="start" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButtonProfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_star_border_white_24dp"
-        app:layout_anchor="@id/show_avatar_neighbour"
-        app:layout_anchorGravity="bottom|end" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#DCDCDC">
@@ -40,6 +34,7 @@
             android:layout_height="300dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -172,6 +167,17 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButtonProfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_star_border_white_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/show_avatar_neighbour"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_avatar_neighbour" />
+
     </android.support.constraint.ConstraintLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</android.support.constraint.ConstraintLayout>
